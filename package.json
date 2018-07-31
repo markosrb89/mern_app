@@ -1,0 +1,26 @@
+{
+  "name": "mern_shopping_list",
+  "version": "1.0.0",
+  "description": "MERN stack app",
+  "main": "server.js",
+  "scripts": {
+    "client": "npm start --prefix client",
+    "client-install": "npm intstall --prefix client",
+    "server": "nodemon server.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "author": "Marko Krtolica | JavaScript Developer",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^3.0.0",
+    "body-parser": "^1.18.3",
+    "concurrently": "^3.6.0",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.4"
+  },
+  "devDependencies": {
+    "dotenv": "^6.0.0",
+    "nodemon": "^1.18.3"
+  }
+}

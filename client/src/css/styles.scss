@@ -1,0 +1,43 @@
+@import "_variables";
+@import "./common/page/page";
+@import "./header/header";
+@import "./about/about";
+@import "./landing-page/landing-page";
+@import "./contact/contact";
+@import "./register/register";
+@import "./login/login";
+@import "./products/products";
+@import "./not-found/not-found";
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: $background-color;
+  font-family: Lato, sans-serif;
+}
+
+@font-face {
+  font-family: Lato;
+  src: url('../shared/assets/fonts/Lato-Regular.ttf');
+}
+
+body::after {
+  content: "";
+  background-image: $home-image;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  opacity: 0.1;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;   
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
