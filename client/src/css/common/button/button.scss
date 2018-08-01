@@ -1,0 +1,39 @@
+.btn {
+    color: white;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 3px;
+    padding: 0 15px;
+    font-weight: normal;
+    border: 0;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-size: 14px;
+    display: block;
+    transition: all .15s ease-in-out;
+    
+    &--primary {
+        background-color: #38597a;
+
+        &:hover {
+            background-color: #254361;
+        }
+    }
+
+    &--secondary {
+        background-color: #167a84;
+
+        &:hover {
+            background-color: #0a4d54;
+        }
+    }
+
+    &--disabled {
+        cursor: not-allowed;
+        background-color: #7b7b7b;
+        
+        &:hover {
+            background-color: #7b7b7b;
+        }
+    }
+}

@@ -12,7 +12,7 @@ const CREATE_USER_SUCCESS = "CREATE_USER_SUCCESS";
 const initialState = {
     loading: false,
     isLoggedIn: false,
-    user: undefined
+    data: undefined
 };
 
 // Reducer
@@ -20,29 +20,29 @@ export default function user(state = initialState, action = {}) {
     switch (action.type) {
         case LOGIN_REQUEST:
             return Object.assign({}, state, {
-                loading: false
+                loading: true
             });
         case LOGIN_SUCCESS:
             return Object.assign({}, state, {
                 loading: false,
                 isLoggedIn: true,
-                user: action.json.user
+                data: action.json.user
             });
         case LOGOUT:
             return Object.assign({}, state, {
                 loading: false,
                 isLoggedIn: false,
-                user: undefined
+                data: undefined
             });
         case CREATE_USER_REQUEST:
             return Object.assign({}, state, {
-                loading: false
+                loading: true
             });
         case CREATE_USER_SUCCESS:
             return Object.assign({}, state, {
                 loading: false,
                 isLoggedIn: true,
-                user: action.json.user
+                data: action.json.user
             });
         default:
             return state;

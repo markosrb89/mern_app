@@ -1,12 +1,13 @@
 import React from "react";
+import { Link } from 'react-router-dom'
 
 import history from "../../shared/history";
 
 const Header = props => {
     const navItems = [
-        <a href="/">Home</a>,
-        <a href="/about">About</a>,
-        <a href="/contact">Contact</a>
+        <Link to="/">Home</Link>,
+        <Link to="/about">About</Link>,
+        <Link to="/contact">Contact</Link>
     ];
 
     return (
@@ -23,10 +24,13 @@ const Header = props => {
                     {
                         props.isLoggedIn ?
                             (<React.Fragment>
-                                <li><a href="/list">List</a></li>
-                                <li><a href="/logout" onLogoutClick={onLogoutClick}>Logout</a></li>
+                                <li><Link to="/list">List</Link></li>
+                                <li><Link to="/logout" onLogoutClick={onLogoutClick}>Logout</Link></li>
                             </React.Fragment>) : 
-                            (<li><a href="/login">Login</a></li>)
+                            (<React.Fragment>
+                                <li><Link to="/login">Login</Link></li>
+                                <li><Link to="/register">Register</Link></li>
+                            </React.Fragment>)
                     }
                 </ul>
             </nav>

@@ -1,4 +1,5 @@
 @import "_variables";
+@import "./global/global";
 @import "./common/page/page";
 @import "./header/header";
 @import "./about/about";
@@ -7,18 +8,16 @@
 @import "./register/register";
 @import "./login/login";
 @import "./products/products";
+@import "./common/button/button";
 @import "./not-found/not-found";
+
+// third party libraries
+@import "./vendor/vendor";
 
 body {
   margin: 0;
   padding: 0;
   background-color: $background-color;
-  font-family: Lato, sans-serif;
-}
-
-@font-face {
-  font-family: Lato;
-  src: url('../shared/assets/fonts/Lato-Regular.ttf');
 }
 
 body::after {

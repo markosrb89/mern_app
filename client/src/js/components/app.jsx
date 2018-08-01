@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Router, Switch, Route, Redirect } from "react-router-dom";
+import ReduxToastr from 'react-redux-toastr'
 
 import history from "../../shared/history";
 import User from "../libs/resources/user";
@@ -44,6 +45,14 @@ class App extends Component {
                         onLogoutClick={this.onLogoutClick}
                     />
                     {this.isUserLoggedIn() ? <AuthenticatedRoutes /> : <UnauthenticatedRoutes />}
+                    <ReduxToastr
+                        timeOut={2500}
+                        newestOnTop={false}
+                        preventDuplicates
+                        position="bottom-left"
+                        transitionIn="fadeIn"
+                        transitionOut="fadeOut"
+                    />
                 </React.Fragment>
             </Router>
         );
