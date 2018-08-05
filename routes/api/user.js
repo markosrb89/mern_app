@@ -35,12 +35,12 @@ router.post('/register', (req, res) => {
         !req.body.name ||
         !req.body.email ||
         !req.body.password ||
-        !req.body.password2
+        !req.body.passwordRepeat
     ) {
         errors.push({ text: 'Please fill in all fields' })
     }
 
-    if (req.body.password !== req.body.password2) {
+    if (req.body.password !== req.body.passwordRepeat) {
         errors.push({ text: 'Passwords do not match' });
     }
 

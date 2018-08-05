@@ -2,27 +2,27 @@ const express = require('express');
 const router = express.Router();
 const checkAuth = require('../middleware/check-auth');
 
-// Item Model
-const Item = require('../../models/Item');
+// Product Model
+const Product = require('../../models/Product');
 
-// @route GET api/items
-// @desc Get All Items
+// @route GET api/products
+// @desc Get All Products
 router.get('/', checkAuth, (req, res) => {
-    Item.find()
+    Product.find()
         .sort({ date: -1 })
-        .then(items => res.json(items));
+        .then(products => res.json(products));
 });
 
-// @route POST api/items
-// @desc Create An Item
+// @route POST api/products
+// @desc Create A Product
 router.post('/', checkAuth, (req, res) => {
-    const newItem = new Item({
+    const newProduct = new Product({
         name: req.body.name,
         price: req.body.price
     });
 
-    newItem.save()
-        .then(item => res.json(item))
+    newProduct.save()
+        .then(product => res.json(product))
         .catch(error => {
             console.log(error);
             res.status(500)
@@ -32,16 +32,16 @@ router.post('/', checkAuth, (req, res) => {
         });
 });
 
-// @route PUT api/items/:id
-// @desc Edit Item
+// @route PUT api/products/:id
+// @desc Edit Product
 router.put('/:id', checkAuth, (req, res) => {
-    Item.findById(req.params.id)
-        .then(item => {
-            item.name = req.body.name
-            item.price = req.body.price;
+    Product.findById(req.params.id)
+        .then(product => {
+            product.name = req.body.name
+            product.price = req.body.price;
 
-            item.save()
-                .then(item => res.json(item))
+            product.save()
+                .then(product => res.json(product))
                 .catch(error => {
                     console.log(error);
                     res.status(404)
@@ -52,11 +52,11 @@ router.put('/:id', checkAuth, (req, res) => {
         });
 });
 
-// @route DELETE api/items/:id
-// @desc Delete A Item
+// @route DELETE api/products/:id
+// @desc Delete A Product
 router.delete('/:id', checkAuth, (req, res) => {
-    Item.findById(req.params.id)
-        .then(item => item.remove())
+    Product.findById(req.params.id)
+        .then(product => product.remove())
         .then(() => res.json({ success: true }))
         .catch(error => {
             console.log(error);

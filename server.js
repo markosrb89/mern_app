@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
 
-const items = require('./routes/api/items');
+const products = require('./routes/api/products');
 const user = require('./routes/api/user');
 
 require("dotenv/config");;
@@ -39,7 +39,7 @@ mongoose.connect(db.mongoURI, {
     .catch(error => console.log(error));
 
 // Use Routes
-app.use('/api/items', items);
+app.use('/api/products', products);
 app.use('/api/user', user);
 
 // Throw error if route is not matched
