@@ -6,8 +6,10 @@ const About = props => {
     return (
         <Page>
             <section className="about">
-                <p> MERN Stack app</p>
-                <p>Version 1.0.0</p>
+                <div className="about__wrapper">
+                    <p> MERN Stack app</p>
+                    <p>Version 1.0.0</p>
+                </div>
             </section>
         </Page>
     );

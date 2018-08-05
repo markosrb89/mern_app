@@ -1,4 +1,12 @@
 .about {
     color: #ecf0f1;
     margin: 60px auto;
+
+    .about__wrapper {
+        text-align: center;
+
+        p {
+            margin: 10px;
+        }
+    }
 }

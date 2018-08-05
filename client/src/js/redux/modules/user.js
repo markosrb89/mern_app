@@ -1,4 +1,5 @@
-import { login, createUser } from "../../libs/resources/user";
+import User, { login, createUser } from "../../libs/resources/user";
+import Auth from "../../libs/services/auth";
 
 // Actions
 const LOGIN_REQUEST = "LOGIN_REQUEST";
@@ -26,7 +27,7 @@ export default function user(state = initialState, action = {}) {
             return Object.assign({}, state, {
                 loading: false,
                 isLoggedIn: true,
-                data: action.json.user
+                data: action.json
             });
         case LOGOUT:
             return Object.assign({}, state, {
@@ -42,7 +43,7 @@ export default function user(state = initialState, action = {}) {
             return Object.assign({}, state, {
                 loading: false,
                 isLoggedIn: true,
-                data: action.json.user
+                data: action.json
             });
         default:
             return state;
@@ -54,9 +55,13 @@ export function onLogin(email, password) {
     return dispatch => {
         dispatch(onLoginRequest());
         return login(email, password)
-            .then(json => dispatch(onLoginSuccess(json)));
+            .then(json => {
+                Auth.authenticateUser(json.token);
+                dispatch(onLoginSuccess(json));
+            });
     };
 }
+
 
 function onLoginRequest() {
     return {
@@ -72,6 +77,13 @@ function onLoginSuccess(json) {
 }
 
 export function onLogout() {
+    User.logOut();
+    return dispatch => {
+        return dispatch(onLogoutSuccess());  
+    };
+}
+
+function onLogoutSuccess() {
     return {
         type: LOGOUT
     };

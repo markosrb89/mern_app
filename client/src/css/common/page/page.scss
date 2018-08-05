@@ -4,6 +4,12 @@
     margin: 0 auto;
     display: flex;
     max-width: $max-width-xs;
+
+    section {
+        text-align: center;
+        margin: auto;
+        margin-top: 6%;
+    }
 }
   
 @media(min-width: 576px) {

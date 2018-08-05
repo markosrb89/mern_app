@@ -9,14 +9,13 @@
 @import "./login/login";
 @import "./products/products";
 @import "./common/button/button";
+@import "./common/form/form";
 @import "./not-found/not-found";
 
 // third party libraries
 @import "./vendor/vendor";
 
 body {
-  margin: 0;
-  padding: 0;
   background-color: $background-color;
 }
 

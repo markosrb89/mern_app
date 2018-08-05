@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 
 import "../css/styles.scss";
 import "./fetch/fetch";
+
 import App from "./components/app";
 import store from "./redux/store";
 

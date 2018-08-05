@@ -1,9 +1,12 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { toastr } from "react-redux-toastr";
 
+import history from "../../shared/history";
 import { onLogin } from "../redux/modules/user";
+import { validateCreateUser } from "../libs/resources/user";
 import Page from "./common/page";
 import Input from "./common/input";
 import Button from "./common/button";
@@ -13,37 +16,33 @@ class Login extends Component {
         super(props);
 
         this.state = {
-            emailValue: "",
-            passwordValue: "",
+            email: "",
+            password: "",
             warning: ""
         };
 
         this.onSubmit = this.onSubmit.bind(this);
-        this.onEmailChange = this.onEmailChange.bind(this);
-        this.onPasswordChange = this.onPasswordChange.bind(this);
+        this.validator = this.validator.bind(this);
+        this.updateValue = this.updateValue.bind(this);
     }
 
-    onEmailChange(event) {
-        const { value } = event.target;
-        this.setState({ emailValue: value });
-    }
-
-    onPasswordChange(event) {
-        const { value } = event.target;
-        this.setState({ passwordValue: value });
+    updateValue(key, value) {
+        this.setState({ [key]: value });
     }
 
     onSubmit(event) {
         const { dispatch } = this.props;
-        const { emailValue, passwordValue } = this.state;
+        const { email, password } = this.state;
         event.preventDefault();
 
-        if (emailValue && passwordValue) {
-            dispatch(onLogin(emailValue, passwordValue))
+        if (email && password) {
+            dispatch(onLogin(email, password))
                 .then(() => history.push("/products"))
                 .catch(error => {
                     const title = "Error";
-                    const message = "Couldn't login";
+                    const message = "Authentication failed";
+
+                    this.setState({ warning: "Wrong username or password" });
 
                     toastr.error(title, message);
                     throw error;
@@ -51,44 +50,64 @@ class Login extends Component {
         }
     }
 
+    validator(id, value) {
+        const { email, password } = this.state;
+        let errors;
+
+        if (email && password) {
+            let errors = validateCreateUser({ email, password });
+            return errors && errors.length ? true : false;
+        } else {
+            errors = validateCreateUser({ [id]: value });
+        }
+
+        return errors[id] ? errors[id] : [];
+    }
+
     render() {
         const { user } = this.props;
-        const { loading, data, isLoggedIn } = user;
-        const { emailValue, passwordValue } = this.state;
+        const { loading } = user;
+        const { email, password, warning } = this.state;
 
         return (
             <Page>
                 <section className="login">
-                    <form className="form" onSubmit={this.onSubmit}>
-                        <div className="form__input-wrapper">
-                            <Input
-                                id="email"
-                                name="email"
-                                type="email"
-                                value={emailValue}
-                                label={"Email"}
-                                onChange={this.onEmailChange}
-                            />
-                        </div>
-                        <div className="form__input-wrapper">
-                            <Input
-                                id="password"
-                                name="password"
-                                type="password"
-                                value={passwordValue}
-                                label={"Password"}
-                                onChange={this.onPasswordChange}
-                            />
-                        </div>
-                        <div className="form__input-wrapper">
-                            <Button
-                                value="Login"
-                                primary={true}
-                                loading={loading}
-                                disabled={emailValue && passwordValue ? false : true}
-                            />
-                        </div>
-                    </form>
+                    <h1 className="login__header">{"<Login />"}</h1>
+                    <div className="form-wrapper">
+                        <form className="form" onSubmit={this.onSubmit}>
+                            <div className="form__field-wrapper">
+                                <Input
+                                    id="email"
+                                    name="email"
+                                    type="email"
+                                    value={email}
+                                    placeholder="Email"
+                                    validator={this.validator}
+                                    updateValue={this.updateValue}
+                                />
+                            </div>
+                            <div className="form__field-wrapper">
+                                <Input
+                                    id="password"
+                                    name="password"
+                                    type="password"
+                                    value={password}
+                                    validator={this.validator}
+                                    updateValue={this.updateValue}
+                                />
+                            </div>
+                            <div className="form__field-wrapper">
+                                <Button
+                                    value="Login"
+                                    primary={true}
+                                    loading={loading}
+                                    disabled={email && password ? false : true}
+                                />
+                            </div>
+                            {warning ? (<div className="form__error-message">{warning}</div>) : undefined}
+                        </form>
+                        <div className="create-account"><Link to="/register">Create account</Link></div>
+                    </div>
                 </section>
             </Page>
         );

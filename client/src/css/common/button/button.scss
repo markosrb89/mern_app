@@ -1,9 +1,9 @@
 .btn {
     color: white;
-    height: 40px;
+    height: 50px;
     line-height: 40px;
     border-radius: 3px;
-    padding: 0 15px;
+    padding: 0 30px;
     font-weight: normal;
     border: 0;
     text-transform: uppercase;
@@ -11,6 +11,7 @@
     font-size: 14px;
     display: block;
     transition: all .15s ease-in-out;
+    margin: auto;
     
     &--primary {
         background-color: #38597a;

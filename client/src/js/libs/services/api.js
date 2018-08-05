@@ -1,29 +1,31 @@
 
-async function getItems() {
-    const response = await fetch(`${baseApiUrl}/items`);
+const baseApiUrl = "http://localhost:4000/api";
+
+async function getProducts() {
+    const response = await fetch(`${baseApiUrl}/products`);
     return response.json();
 }
 
-async function createItem(name, price) {
-    const response = await fetch(`${baseApiUrl}/items`, {
+async function createProduct(name, price) {
+    const response = await fetch(`${baseApiUrl}/products`, {
         method: "POST",
         body: { name, price }
     });
     return response.json();
 }
 
-async function deleteItem(itemId) {
-    const response = await fetch(`${baseApiUrl}/items/${itemId}`, {
+async function deleteProduct(productId) {
+    const response = await fetch(`${baseApiUrl}/products/${productId}`, {
         method: "DELETE"
     });
     return response.json();
 }
 
-async function updateItem(itemId) {
-    const response = await fetch(`${baseApiUrl}/items/${itemId}`, {
+async function updateProduct(productId) {
+    const response = await fetch(`${baseApiUrl}/products/${productId}`, {
         method: "PUT"
     });
     return response.json();
 }
 
-export { getItems, createItem, deleteItem, updateItem }
+export { getProducts, createProduct, deleteProduct, updateProduct }

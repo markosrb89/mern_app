@@ -1,50 +1,28 @@
 import React, { Component } from "react";
 import { Router, Switch, Route, Redirect } from "react-router-dom";
-import ReduxToastr from 'react-redux-toastr'
+import ReduxToastr from 'react-redux-toastr';
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 import history from "../../shared/history";
-import User from "../libs/resources/user";
-import { onLogout } from "../redux/modules/user";
 import Header from "./header";
 import LandingPage from "./landing-page";
 import Products from "./products";
 import About from "./about";
 import Contact from "./contact";
 import Login from "./login";
-import Register from "./register";
+import Register from "./register/register";
 import NotFoundPage from "./not-found";
 
 
 class App extends Component {
-    constructor(props) {
-        super(props);
-
-        this.isUserLoggedIn = this.isUserLoggedIn.bind(this);
-        this.onLogoutClick = this.onLogoutClick.bind(this);
-    }
-
-    isUserLoggedIn() {
-        if (User.isLoggedIn()) {
-            return true;
-        } else {
-            return false;
-        }
-    };
-
-    onLogoutClick() {
-        User.logOut();
-        dispatch(onLogout());
-    };
-
     render() {
+        const { user } = this.props;
         return (
             <Router history={history}>
                 <React.Fragment>
-                    <Header
-                        isLoggedIn={this.isUserLoggedIn()}
-                        onLogoutClick={this.onLogoutClick}
-                    />
-                    {this.isUserLoggedIn() ? <AuthenticatedRoutes /> : <UnauthenticatedRoutes />}
+                    <Header />
+                    { user.isLoggedIn ? <AuthenticatedRoutes /> : <UnauthenticatedRoutes /> }
                     <ReduxToastr
                         timeOut={2500}
                         newestOnTop={false}
@@ -93,5 +71,13 @@ const AuthenticatedRoutes = () => (
     </Switch>
 );
 
+App.proptypes = {
+    dispatch: PropTypes.func.isRequired,
+    user: PropTypes.object
+};
 
-export default App;
+const mapStateToProps = state => ({
+    user: state.user
+});
+
+export default connect(mapStateToProps)(App);
