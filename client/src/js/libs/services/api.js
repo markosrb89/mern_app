@@ -9,7 +9,7 @@ async function getProducts() {
 async function createProduct(name, price) {
     const response = await fetch(`${baseApiUrl}/products`, {
         method: "POST",
-        body: { name, price }
+        body: JSON.stringify({ name, price })
     });
     return response.json();
 }
@@ -21,9 +21,10 @@ async function deleteProduct(productId) {
     return response.json();
 }
 
-async function updateProduct(productId) {
+async function updateProduct(productId, name, price) {
     const response = await fetch(`${baseApiUrl}/products/${productId}`, {
-        method: "PUT"
+        method: "PUT",
+        body: JSON.stringify({ name, price })
     });
     return response.json();
 }

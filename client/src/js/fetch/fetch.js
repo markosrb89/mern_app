@@ -9,21 +9,21 @@ import Auth from "../libs/services/auth";
  * through props.
  */
 
-// const defaultFetchHeaders = new Headers({
-//     "Content-Type": "application/json",
-//     "Authorization": `Bearer ${Auth.getToken()}`
-// });
+const defaultFetchHeaders = new Headers({
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${Auth.getToken()}`
+});
 
-let defaultFetchHeaders;
+// let defaultFetchHeaders;
 
-if (Auth.isUserAuthenticated()) {
-    defaultFetchHeaders = new Headers({
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${Auth.getToken()}`
-    });
-} else {
-    defaultFetchHeaders = new Headers({ "Content-Type": "application/json" });
-}
+// if (Auth.isUserAuthenticated()) {
+//     defaultFetchHeaders = new Headers({
+//         "Content-Type": "application/json",
+//         "Authorization": `Bearer ${Auth.getToken()}`
+//     });
+// } else {
+//     defaultFetchHeaders = new Headers({ "Content-Type": "application/json" });
+// }
 
 const defaultFetchProps = {
     headers: defaultFetchHeaders

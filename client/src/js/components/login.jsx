@@ -80,7 +80,6 @@ class Login extends Component {
                                     id="email"
                                     name="email"
                                     type="email"
-                                    value={email}
                                     placeholder="Email"
                                     validator={this.validator}
                                     updateValue={this.updateValue}
@@ -91,7 +90,6 @@ class Login extends Component {
                                     id="password"
                                     name="password"
                                     type="password"
-                                    value={password}
                                     validator={this.validator}
                                     updateValue={this.updateValue}
                                 />

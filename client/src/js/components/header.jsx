@@ -10,10 +10,10 @@ class Header extends Component {
     constructor(props) {
         super(props);
 
-        this.onLogoutBtnClick = this.onLogoutBtnClick.bind(this);    
+        this.onLogoutBtnClick = this.onLogoutBtnClick.bind(this);
     }
 
-    onLogoutBtnClick(event) {
+    onLogoutBtnClick() {
         const { dispatch } = this.props;
         dispatch(onLogout());
         history.push('/');
@@ -24,7 +24,7 @@ class Header extends Component {
     }
 
     render() {
-        const { user } = this.props;
+        const { isLoggedIn } = this.props;
         const publicLinks = [
             <li><Link to="/">Home</Link></li>,
             <li><Link to="/about">About</Link></li>,
@@ -52,9 +52,9 @@ class Header extends Component {
                 </div>
                 <nav className="header__navigation">
                     <ul className="header-menu-links">
-                        { 
-                            user.isLoggedIn ? 
-                            (publicLinks.concat(authenticatedLinks)) : (publicLinks.concat(unauthenticatedLinks)) 
+                        {
+                            isLoggedIn ?
+                                (publicLinks.concat(authenticatedLinks)) : (publicLinks.concat(unauthenticatedLinks))
                         }
                     </ul>
                 </nav>
@@ -64,12 +64,7 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    user: PropTypes.object
+    dispatch: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
-    user: state.user
-});
-
-export default connect(mapStateToProps)(Header);
+export default connect()(Header);

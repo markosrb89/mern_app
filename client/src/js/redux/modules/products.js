@@ -153,10 +153,10 @@ function onDeleteProductSuccess(json) {
     }
 }
 
-export function onUpdateProduct(id) {
+export function onUpdateProduct(id, name, price) {
     return dispatch => {
         dispatch(onUpdateProductRequest());
-        return updateProduct(id)
+        return updateProduct(id, name, price)
             .then(json => dispatch(onUpdateProductSuccess(json)));
     };
 }
