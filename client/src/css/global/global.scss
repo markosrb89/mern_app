@@ -49,3 +49,50 @@ table {
   display: table;
   clear: both;
 }
+
+body {
+	background-color: $background-color;
+}
+  
+body::after {
+content: "";
+background-image: $home-image;
+background-repeat: no-repeat;
+background-attachment: fixed;
+background-size: cover;
+opacity: 0.1;
+top: 0;
+left: 0;
+bottom: 0;
+right: 0;
+position: absolute;
+z-index: -1;   
+}
+
+#root {
+display: flex;
+flex-direction: column;
+height: 100vh;
+}
+
+.spinner {
+	position: fixed;
+	top: 0;
+	right: 0;
+	opacity: 0.6;
+	bottom: 0;
+	left: 0;
+	background-color: $spinner-background-color;
+	backface-visibility: unset;
+	color: $spinner-color;
+	z-index: 999999999;
+	transition: all .3s ease;
+	
+	.spinner-icon {
+		position: absolute;
+		font-size: 70px;
+		top: calc(50% - 0.6em);
+		left: calc(50% - 0.6em);
+		z-index: 999999999;
+	}
+  }

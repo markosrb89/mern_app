@@ -17,10 +17,12 @@ class Products extends Component {
     constructor(props) {
         super(props);
 
+        this.getProducts = this.getProducts.bind(this);
         this.deleteProduct = this.deleteProduct.bind(this);
         this.updateProduct = this.updateProduct.bind(this);
         this.createProduct = this.createProduct.bind(this);
         this.onRenderModal = this.onRenderModal.bind(this);
+        this.getProducts();
     }
 
     deleteProduct(productId) {
@@ -72,7 +74,7 @@ class Products extends Component {
         }
     }
 
-    componentDidMount() {
+    getProducts() {
         const { dispatch } = this.props;
         dispatch(onGetProducts())
             .catch(error => {
@@ -84,7 +86,16 @@ class Products extends Component {
     }
 
     render() {
-        const { products } = this.props;
+        const { products, user } = this.props;
+
+        if (products.loading) {
+            return (
+                <div className="spinner">
+                    <i className="fa fa-spinner fa-spin spinner-icon" />
+                </div>
+            );
+        }
+
         return (
             <Page>
                 <section className="products">
@@ -145,7 +156,8 @@ Products.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    products: state.products
+    products: state.products,
+    user: state.user
 });
 
 export default connect(mapStateToProps)(Products);

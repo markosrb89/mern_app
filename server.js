@@ -6,7 +6,7 @@ const path = require('path');
 const products = require('./routes/api/products');
 const user = require('./routes/api/user');
 
-require("dotenv/config");;
+require("dotenv/config");
 
 const app = express();
 

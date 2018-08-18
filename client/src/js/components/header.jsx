@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from 'react-router-dom';
+import { NavLink  } from 'react-router-dom';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
@@ -26,19 +26,19 @@ class Header extends Component {
     render() {
         const { isLoggedIn } = this.props;
         const publicLinks = [
-            <li><Link to="/">Home</Link></li>,
-            <li><Link to="/about">About</Link></li>,
-            <li><Link to="/contact">Contact</Link></li>
+            <li><NavLink to="/">Home</NavLink ></li>,
+            <li><NavLink to="/about">About</NavLink ></li>,
+            <li><NavLink to="/contact">Contact</NavLink ></li>
         ];
 
         const authenticatedLinks = [
-            <li><Link to="/products">Products</Link></li>,
-            <li><Link onClick={this.onLogoutBtnClick} to="#">Logout</Link></li>
+            <li><NavLink to="/products">Products</NavLink ></li>,
+            <li><NavLink onClick={this.onLogoutBtnClick} to="#">Logout</NavLink ></li>
         ];
 
         const unauthenticatedLinks = [
-            <li><Link to="/login">Login</Link></li>,
-            <li><Link to="/register">Register</Link></li>
+            <li><NavLink to="/login">Login</NavLink ></li>,
+            <li><NavLink to="/register">Register</NavLink ></li>
         ];
 
         return (

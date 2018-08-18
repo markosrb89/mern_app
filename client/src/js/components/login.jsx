@@ -31,13 +31,13 @@ class Login extends Component {
     }
 
     onSubmit(event) {
-        const { dispatch } = this.props;
+        const { dispatch, user } = this.props;
         const { email, password } = this.state;
         event.preventDefault();
 
         if (email && password) {
             dispatch(onLogin(email, password))
-                .then(() => history.push("/products"))
+                .then(() => history.push("/"))
                 .catch(error => {
                     const title = "Error";
                     const message = "Authentication failed";

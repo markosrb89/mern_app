@@ -30,7 +30,6 @@ class CreateProductSettings extends Component {
 
     render() {
         const { name, price, warning } = this.state;
-        console.log(this.props);
         return (
             <div className="form-wrapper">
                 <form className="form" onSubmit={this.onSubmit}>
