@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const Dotenv = require('dotenv-webpack');
 const devMode = process.env.NODE_ENV !== 'production'
 
 module.exports = env => ({
@@ -70,6 +71,10 @@ module.exports = env => ({
         }),
         new MiniCssExtractPlugin({
             filename: "style.css"
+        }),
+        new Dotenv({
+            path: '../.env',
+            sage: true
         })
     ],
     mode : devMode ? 'development' : 'production'

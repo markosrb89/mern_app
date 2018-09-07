@@ -39,9 +39,11 @@ router.put('/:id', checkAuth, (req, res) => {
         .then(product => {
             product.name = req.body.name
             product.price = req.body.price;
-
+            
             product.save()
-                .then(product => res.json(product))
+                .then(product => {
+                    res.json(product)
+                })
                 .catch(error => {
                     console.log(error);
                     res.status(404)
@@ -56,8 +58,10 @@ router.put('/:id', checkAuth, (req, res) => {
 // @desc Delete A Product
 router.delete('/:id', checkAuth, (req, res) => {
     Product.findById(req.params.id)
-        .then(product => product.remove())
-        .then(() => res.json({ success: true }))
+        .then(product => {
+            product.remove()   
+            res.json({ success: true, product })            
+        })
         .catch(error => {
             console.log(error);
             res.status(404)

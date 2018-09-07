@@ -1,7 +1,11 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { toastr } from "react-redux-toastr";
 
 import Page from "./common/page";
 import Button from "./common/button";
+import { sendEmail } from "../redux/modules/contact"; 
 
 class Contact extends Component {
     constructor(props) {
@@ -10,7 +14,7 @@ class Contact extends Component {
         this.state = {
             name: "",
             email: "",
-            text: "",
+            message: "",
             loading: false
         };
 
@@ -24,11 +28,30 @@ class Contact extends Component {
     }
 
     onSubmit(event) {
+        const { dispatch } = this.props;
+        const { name, email, message } = this.state;
         event.preventDefault();
+        
+        this.setState({ loading: true });
+        
+        dispatch(sendEmail(name, email, message))
+            .then(() => {
+                this.setState({ 
+                    name: "", 
+                    email: "", 
+                    message: "", 
+                    loading: false 
+                });
+                toastr.success("Success", "Your message is successfully sent!");
+            })
+            .catch(error => {
+                toastr.error("Error", "Something went wrong!");
+                throw error;
+            });
     }
 
     render() {
-        const { name, email, text, loading } = this.state;
+        const { name, email, message, loading } = this.state;
         return (
             <Page>
                 <section className="contact">
@@ -67,10 +90,10 @@ class Contact extends Component {
                                 <textarea
                                     className="form__textarea"
                                     id="textarea"
-                                    name="textarea"
+                                    name="message"
                                     cols="30"
                                     rows="10"
-                                    defaultValue={text}
+                                    value={message}
                                     onChange={this.onChange}
                                 >
                                 </textarea>
@@ -80,7 +103,7 @@ class Contact extends Component {
                                     value="Submit"
                                     primary={true}
                                     loading={loading}
-                                    disabled={true}
+                                    disabled={name && email && message ? false: true}
                                 />
                             </div>
                         </form>
@@ -91,4 +114,9 @@ class Contact extends Component {
     }
 }
 
-export default Contact;
+Contact.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    contact: PropTypes.object
+};
+
+export default connect()(Contact);

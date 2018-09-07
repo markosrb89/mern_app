@@ -13,6 +13,10 @@
     transition: all .15s ease-in-out;
     margin: auto;
     
+    i {
+        margin: 0 20px;
+    }
+
     &--primary {
         background-color: #38597a;
 

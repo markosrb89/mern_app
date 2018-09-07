@@ -5,6 +5,7 @@ const path = require('path');
 
 const products = require('./routes/api/products');
 const user = require('./routes/api/user');
+const contactForm = require('./routes/api/contact-form');
 
 require("dotenv/config");
 
@@ -41,6 +42,7 @@ mongoose.connect(db.mongoURI, {
 // Use Routes
 app.use('/api/products', products);
 app.use('/api/user', user);
+app.use('/api/send', contactForm);
 
 // Throw error if route is not matched
 app.use((req, res, next) => {

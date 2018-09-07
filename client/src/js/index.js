@@ -1,10 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
+import "whatwg-fetch";
 
 import "../css/styles.scss";
-import "./fetch/fetch";
-
 import App from "./components/app";
 import store from "./redux/store";
 

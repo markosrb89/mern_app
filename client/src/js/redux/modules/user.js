@@ -56,8 +56,12 @@ export function onLogin(email, password) {
         dispatch(onLoginRequest());
         return login(email, password)
             .then(json => {
-                Auth.authenticateUser(json.token);
-                dispatch(onLoginSuccess(json));
+                if (json.success) {
+                    Auth.authenticateUser(json.token);
+                    dispatch(onLoginSuccess(json));
+                } else {
+                    throw new Error();    
+                }
             });
     };
 }
@@ -79,7 +83,7 @@ function onLoginSuccess(json) {
 export function onLogout() {
     User.logOut();
     return dispatch => {
-        return dispatch(onLogoutSuccess());  
+        return dispatch(onLogoutSuccess());
     };
 }
 

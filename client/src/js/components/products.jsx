@@ -3,12 +3,14 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { toastr } from "react-redux-toastr";
 
+import history from "../../shared/history";
 import {
     onGetProducts,
     onCreateProduct,
     onUpdateProduct,
     onDeleteProduct
 } from "../redux/modules/products";
+import { onLogout } from "../redux/modules/user";
 import { renderModal } from "../redux/modules/modal";
 import { MODAL_TYPES } from "./modals/modals";
 import Page from "./common/page";
@@ -16,6 +18,8 @@ import Page from "./common/page";
 class Products extends Component {
     constructor(props) {
         super(props);
+
+        this.state = { loading: false };
 
         this.getProducts = this.getProducts.bind(this);
         this.deleteProduct = this.deleteProduct.bind(this);
@@ -25,16 +29,25 @@ class Products extends Component {
         this.getProducts();
     }
 
+    getProducts() {
+        const { dispatch } = this.props;
+        dispatch(onGetProducts())
+            .catch(error => {
+                this.checkIsTokenExpired(error);
+                toastr.error("Error", "Couldn't fetch products");
+                throw error;
+            });
+    }
+
     deleteProduct(productId) {
         return (event) => {
+            event.preventDefault();
             const { dispatch } = this.props;
             event.stopPropagation();
             dispatch(onDeleteProduct(productId))
                 .catch(error => {
-                    const title = "Error";
-                    const message = "Couldn't delete product";
-
-                    toastr.error(title, message);
+                    this.checkIsTokenExpired(error);
+                    toastr.error("Error", "Couldn't delete product");
                     throw error;
                 });
         };
@@ -44,12 +57,11 @@ class Products extends Component {
         const { dispatch } = this.props;
         event.stopPropagation();
 
-        dispatch(onUpdateProduct(productId, name, price))
+        return dispatch(onUpdateProduct(productId, name, price))
+            .then(dispatch(renderModal(false)))
             .catch(error => {
-                const title = "Error";
-                const message = "Couldn't update product";
-
-                toastr.error(title, message);
+                this.checkIsTokenExpired(error);
+                toastr.error("Error", "Couldn't update product");
                 throw error;
             });
     }
@@ -57,12 +69,11 @@ class Products extends Component {
     createProduct(name, price) {
         const { dispatch } = this.props;
 
-        dispatch(onCreateProduct(name, price))
+        return dispatch(onCreateProduct(name, price))
+            .then(dispatch(renderModal(false)))
             .catch(error => {
-                const title = "Error";
-                const message = "Couldn't create product";
-
-                toastr.error(title, message);
+                this.checkIsTokenExpired(error);
+                toastr.error("Error", "Couldn't create product");
                 throw error;
             });
     }
@@ -74,19 +85,18 @@ class Products extends Component {
         }
     }
 
-    getProducts() {
+    checkIsTokenExpired(error) {
         const { dispatch } = this.props;
-        dispatch(onGetProducts())
-            .catch(error => {
-                const title = "Error";
-                const message = "Couldn't fetch products";
-                toastr.error(title, message);
-                throw error;
-            });
+        if (error.message === "Error: token_expired") {
+            toastr.info("Info", "Token expired, please login again");
+            dispatch(onLogout())
+                .then(history.push("/login"));
+        }
     }
 
     render() {
-        const { products, user } = this.props;
+        const { loading } = this.state;
+        const { products } = this.props;
 
         if (products.loading) {
             return (
@@ -105,7 +115,7 @@ class Products extends Component {
                             true,
                             {
                                 type: MODAL_TYPES.CREATE_PRODUCT_SETTINGS,
-                                props: { onClick: this.createProduct }
+                                props: { loading, onClick: this.createProduct }
                             }
                         )}
                     >
@@ -132,6 +142,7 @@ class Products extends Component {
                                                 type: MODAL_TYPES.UPDATE_PRODUCT_SETTINGS,
                                                 props: {
                                                     product,
+                                                    loading,
                                                     onClick: this.updateProduct
                                                 }
                                             }

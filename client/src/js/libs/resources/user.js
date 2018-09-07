@@ -1,7 +1,7 @@
 import validate from "validate.js";
 import Auth from '../services/auth'
 
-const baseApiUrl = "http://localhost:4000/api";
+const baseApiUrl = process.env.API_URL;
 
 validate.validators.upperCaseRequired = function (value, options, key, attributes) {
     if (value && /[A-Z]{1}/.test(value) !== options) {
@@ -76,13 +76,13 @@ class User {
 
 export async function login(email, password) {
     try {
-    Auth.deauthenticateUser();
-    const response = await fetch(`${baseApiUrl}/user/login`, {
-        method: "POST",
-        body: JSON.stringify({ email, password })
-    });
-    
-    return response.json();
+        Auth.deauthenticateUser();
+        const response = await fetch(`${baseApiUrl}/user/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password })
+        });
+        return response.json();
     } catch (error) {
         throw new Error(error);
     }
@@ -90,13 +90,13 @@ export async function login(email, password) {
 
 export async function createUser(credentials) {
     try {
-    Auth.deauthenticateUser();
-    const response = await fetch(`${baseApiUrl}/user/register`, {
-        method: "POST",
-        body: JSON.stringify({ ...credentials })
-    });
-
-    return response.json();
+        Auth.deauthenticateUser();
+        const response = await fetch(`${baseApiUrl}/user/register`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ...credentials })
+        });
+        return response.json();
     } catch (error) {
         throw new Error(error);
     }

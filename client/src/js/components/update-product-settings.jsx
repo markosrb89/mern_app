@@ -8,7 +8,8 @@ class UpdateProductSettings extends Component {
 
         this.state = { 
             name: props.product.name, 
-            price: props.product.price
+            price: props.product.price,
+            loading: false
         };
 
         this.onChange = this.onChange.bind(this);
@@ -20,19 +21,20 @@ class UpdateProductSettings extends Component {
         this.setState({ [name]: value });
     }
 
-    onSubmit() {
+    onSubmit(event) {
         event.preventDefault();
         const { name, price } = this.state;
         const { product, onClick } = this.props;
-        
+        this.setState({ loading: true });
+
         if (name && price) {
-            onClick(product._id, name, price);
+            onClick(product._id, name, parseInt(price, 10))
+                .then(() => this.setState({ loading: false }));
         }
     }
 
     render() {
-        const { product } = this.props;
-        const { name, price, warning } = this.state;
+        const { name, price, loading } = this.state;
         return (
             <div className="form-wrapper">
                 <form className="form" onSubmit={this.onSubmit}>
@@ -60,7 +62,7 @@ class UpdateProductSettings extends Component {
                         <Button
                             value="Ok"
                             primary={true}
-                            loading={false}
+                            loading={loading}
                             disabled={name && price ? false : true}
                         />
                     </div>

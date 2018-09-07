@@ -45,7 +45,7 @@ export default function products(state = initialState, action = {}) {
         case CREATE_PRODUCT_SUCCESS:
             return Object.assign({}, state, {
                 loading: false,
-                data: [...state, action.json]
+                data: [action.json, ...state.data]
             });
         case CREATE_PRODUCT_FAILED:
             return Object.assign({}, state, {
@@ -58,7 +58,7 @@ export default function products(state = initialState, action = {}) {
         case DELETE_PRODUCT_SUCCESS:
             return Object.assign({}, state, {
                 loading: false,
-                data: state.data.filter(product => product.id !== action.json.id)
+                data: state.data.filter(product => product._id !== action.json.product._id)
             });
         case DELETE_PRODUCT_FAILED:
             return Object.assign({}, state, {
@@ -72,12 +72,13 @@ export default function products(state = initialState, action = {}) {
             return Object.assign({}, state, {
                 loading: false,
                 data: state.data.map(product => {
-                    if (product.id === action.json.product.id) {
+                    if (product._id === action.json._id) {
                         return {
-                            ...state.product,
-                            ...action.json.product
+                            ...product,
+                            ...action.json
                         }
                     }
+                    return product;
                 })
             });
         case UPDATE_PRODUCT_FAILED:

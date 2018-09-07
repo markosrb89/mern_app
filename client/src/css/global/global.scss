@@ -56,23 +56,23 @@ body {
   
 body::after {
 content: "";
-background-image: $home-image;
-background-repeat: no-repeat;
-background-attachment: fixed;
-background-size: cover;
-opacity: 0.1;
-top: 0;
-left: 0;
-bottom: 0;
-right: 0;
-position: absolute;
-z-index: -1;   
+	background-image: $home-image;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+	opacity: 0.1;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	position: absolute;
+	z-index: -1;   
 }
 
 #root {
-display: flex;
-flex-direction: column;
-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
 }
 
 .spinner {

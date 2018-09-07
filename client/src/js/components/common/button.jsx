@@ -18,13 +18,14 @@ const Button = props => {
         "btn--disabled": disabled
     });
     return (
-        <input
+        <button
             className={buttonClasses}
             type="submit"
-            value={value}
             disabled={disabled}
             onClick={onClick}
-        />
+        >
+            { loading ? (<i className="fa fa-spinner fa-spin" />) : value }
+        </button>
     );
 };
 
