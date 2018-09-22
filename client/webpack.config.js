@@ -4,9 +4,9 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const Dotenv = require('dotenv-webpack');
-const devMode = process.env.NODE_ENV !== 'production'
 
 module.exports = env => ({
+    mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
     devtool: 'source-map',
     resolve: {
         extensions: ['.js', '.jsx']
@@ -76,6 +76,5 @@ module.exports = env => ({
             path: '../.env',
             sage: true
         })
-    ],
-    mode : devMode ? 'development' : 'production'
+    ]
 });

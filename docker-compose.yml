@@ -1,0 +1,31 @@
+version: '3'
+services:
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - "27017:27017"
+  adminmongo:
+    container_name: adminmongo
+    image: "mrvautin/adminmongo"
+    ports:
+      - "1234:1234"
+  express-app:
+    container_name: express-app
+    image: krtolica/express-app
+    restart: always
+    build: .
+    environment:
+      NODE_ENV: development
+    ports:
+      - "8080:4000"
+    links:
+      - mongo
+  react-app:
+    container_name: react-app
+    image: krtolica/react-app
+    build: ./client
+    environment:
+      NODE_ENV: development
+    ports:
+      - "8081:3000"

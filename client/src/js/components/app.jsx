@@ -99,7 +99,7 @@ const PublicRoutes = () => (
 );
 
 /**
- * Routes unauthenticated users
+ * Routes for unauthenticated users
  */
 const UnauthenticatedRoutes = () => (
     <Switch>

@@ -1,0 +1,90 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        "indent": [
+            "error",
+            "tab"
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "jsx-quotes": [
+            "warn",
+            "prefer-single"
+        ],
+        "max-len": [
+            "warn",
+            {
+                "code": 120,
+                "comments": 83,
+                "ignoreUrls": true
+            }
+        ],
+        "spaced-comment": [
+            "warn",
+            "always"
+        ],
+        "space-before-blocks": "warn",
+        "space-before-function-paren": [
+            "warn",
+            {
+                "anonymous": "always",
+                "named": "never",
+                "asyncArrow": "always"
+            }
+        ],
+        "block-spacing": "warn",
+        "key-spacing": "warn",
+        "arrow-spacing": "warn",
+        "keyword-spacing": [
+            "warn",
+            {
+                "before": true
+            }
+        ],
+        "comma-spacing": "warn",
+        "object-curly-spacing": [
+            "warn",
+            "always"
+        ],
+        "space-infix-ops": "warn",
+        "eol-last": [
+            "warn",
+            "never"
+        ],
+        "no-multi-spaces": "warn",
+        "no-trailing-spaces": "warn",
+        "no-multiple-empty-lines": [
+            "warn",
+            {
+                "max": 1
+            }
+        ],
+        "no-var": "error",
+        "no-unused-vars": "error",
+        "no-unreachable": "error"
+    }
+}
